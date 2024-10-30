@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('edit_slider') }}
+    {{ __('edit slider') }}
 @endsection
 @section('css')
     <!--- Internal Select2 css-->
@@ -15,7 +15,7 @@
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
                         href="{{ route('sliders.index') }}">{{ __('sliders') }}</a></span>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
-                        href="{{ route('sliders.edit', $slider->id) }}">{{ __('edit_slider') }}</a></span>
+                        href="{{ route('sliders.edit', $slider->id) }}">{{ __('edit slider') }}</a></span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-6 form-group mg-b-0">
                                 <label class="form-label">{{ __('title') }}<span class="tx-danger">*</span></label>
-                                <input class="form-control" name="title" placeholder="{{ __('enter_name') }}"
+                                <input class="form-control" name="title"
                                     required="" type="text" value="{{ old('title') ?? $slider->title }}">
                                 @error('title')
                                     <div class="text-danger">{{ $message }}</div>

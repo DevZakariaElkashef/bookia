@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('create_slider') }}
+    {{ __('create slider') }}
 @endsection
 @section('css')
     <!--- Internal Select2 css-->
@@ -15,7 +15,7 @@
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
                         href="{{ route('sliders.index') }}">{{ __('sliders') }}</a></span>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
-                        href="{{ route('sliders.create') }}">{{ __('create_slider') }}</a></span>
+                        href="{{ route('sliders.create') }}">{{ __('create slider') }}</a></span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">

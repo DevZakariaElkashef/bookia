@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('edit_category') }}
+    {{ __('edit category') }}
 @endsection
 @section('css')
     <!--- Internal Select2 css-->
@@ -15,7 +15,7 @@
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
                         href="{{ route('categories.index') }}">{{ __('categories') }}</a></span>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
-                        href="{{ route('categories.edit', $category->id) }}">{{ __('edit_category') }}</a></span>
+                        href="{{ route('categories.edit', $category->id) }}">{{ __('edit category') }}</a></span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
@@ -44,7 +44,7 @@
                         <div class="row">
                             <div class="col-md-6 form-group mg-b-0">
                                 <label class="form-label">{{ __('name') }}<span class="tx-danger">*</span></label>
-                                <input class="form-control" name="name" placeholder="{{ __('enter_name') }}"
+                                <input class="form-control" name="name"
                                     required="" type="text" value="{{ old('name') ?? $category->name }}">
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>

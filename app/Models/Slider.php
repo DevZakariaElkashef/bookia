@@ -17,4 +17,9 @@ class Slider extends Model
     {
         $query->where('is_active', 1);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        $query->where('title', 'like', "%{$search}%");
+    }
 }

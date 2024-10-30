@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('create_book') }}
+    {{ __('create book') }}
 @endsection
 @section('css')
     <!--- Internal Select2 css-->
@@ -15,7 +15,7 @@
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
                         href="{{ route('books.index') }}">{{ __('books') }}</a></span>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
-                        href="{{ route('books.create') }}">{{ __('create_book') }}</a></span>
+                        href="{{ route('books.create') }}">{{ __('create book') }}</a></span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
@@ -95,7 +95,7 @@
                                 <label class="form-label">{{ __('status') }}: <span class="tx-danger">*</span></label>
                                 <select required class="form-control" name="is_active">
                                     <option value="0" @if (old('is_active') == 0) selected @endif>
-                                        {{ __('not_active') }}</option>
+                                        {{ __('not active') }}</option>
                                     <option value="1" @if (old('is_active') == 1) selected @endif>
                                         {{ __('active') }}</option>
                                 </select>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    {{ __('categories') }}
+    {{ __('orders') }}
 @endsection
 @section('css')
     <!---Internal Owl Carousel css-->
@@ -18,22 +18,21 @@
                 <h5 class="content-title mb-0 my-auto"><a href="{{ route('dashboard') }}"
                         class="text-dark">{{ __('home') }}</a></h5>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ <a class="text-dark"
-                        href="{{ route('categories.index') }}">{{ __('categories') }}</a></span>
+                        href="{{ route('orders.index') }}">{{ __('orders') }}</a></span>
             </div>
         </div>
         <div class="d-flex my-xl-auto right-content">
-
             <div class="pr-1 mb-3 mb-xl-0">
                 <button type="button" class="btn btn-info btn-icon ml-2" data-target="#filterModal" data-toggle="modal"
                     data-effect="effect-flip-vertical"><i class="mdi mdi-filter-variant"></i></button>
             </div>
             <div class="pr-1 mb-3 mb-xl-0">
-                <a href="{{ route('categories.index') }}" class="btn btn-warning  btn-icon ml-2"><i
+                <a href="{{ route('orders.index') }}" class="btn btn-warning  btn-icon ml-2"><i
                         class="mdi mdi-refresh"></i></a>
             </div>
-            <div class="mb-3 mb-xl-0">
-                <a href="{{ route('categories.create') }}" class="btn btn-primary ">{{ __('create') }}</a>
-            </div>
+            {{-- <div class="mb-3 mb-xl-0">
+                <a href="{{ route('orders.create') }}" class="btn btn-primary ">{{ __('create') }}</a>
+            </div> --}}
         </div>
     </div>
     <!-- breadcrumb -->
@@ -65,29 +64,23 @@
     </div>
 
     <div class="modal" id="filterModal">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">{{ __('filter') }}</h6><button aria-label="Close" class="close"
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form method="get" action="{{ route('categories.index') }}">
+                <form method="get" action="{{ route('orders.index') }}">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="start_at">{{ __('start_date') }}</label>
-                            <input type="date" name="start_at" value="{{ request('start_at') }}" id="start_at" class="form-control">
+                            <input type="date" name="start_at" value="{{ request('start_at') }}" id="start_at"
+                                class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="end_at">{{ __('end_date') }}</label>
-                            <input type="date" name="end_at" value="{{ request('end_at') }}" id="end_at" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="is_active">{{ __('status') }}</label>
-                            <select name="is_active" class="form-control">
-                                <option value="">{{ __('all') }}</option>
-                                <option value="0" @if(request('is_active') == '0') selected @endif>{{ __('not_active') }}</option>
-                                <option value="1" @if(request('is_active') == '1') selected @endif>{{ __('active') }}</option>
-                            </select>
+                            <input type="date" name="end_at" value="{{ request('end_at') }}" id="end_at"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -99,6 +92,7 @@
             </div>
         </div>
     </div>
+
     <!-- End Modal effects-->
     <!-- row opened -->
     <div class="row row-sm">
@@ -106,32 +100,28 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h4 class="card-title mg-b-0">{{ __('categories') }}</h4>
-                        <div class="d-flex align-items-center">
+                        <h4 class="card-title mg-b-0">{{ __('orders') }}</h4>
+                        <div class="d-flex">
                             <a href="#" class="btn btn-danger mx-1 d-none" id="deleteSelectionBtn"
                                 data-toggle="modal" data-effect="effect-flip-vertical" data-target="#deletemodal"
-                                data-url="{{ route('categories.delete') }}">{{ __('delete') }}</a>
-
-                            <input type="text" id="searchInput" data-url="{{ route('categories.search') }}"
-                                class="form-control mx-1" placeholder="{{ __('search') }}">
-
+                                data-url="{{ route('orders.delete') }}">{{ __('delete') }}</a>
+                            <input type="text" id="searchInput" data-url="{{ route('orders.search') }}"
+                                class="form-control" placeholder="{{ __('search') }}">
                             <div class="custom-select-wrapper mx-1">
                                 <select id="showPerPage" class="custom-select"
-                                    data-url="{{ route('categories.index') }}" onchange="updatePageSize()">
+                                    data-url="{{ route('orders.index') }}" onchange="updatePageSize()">
                                     <option value="10" @if (request('per_page') && request('per_page') == 10) selected @endif>10</option>
                                     <option value="25" @if (request('per_page') && request('per_page') == 25) selected @endif>25</option>
                                     <option value="50" @if (request('per_page') && request('per_page') == 50) selected @endif>50</option>
                                     <option value="100" @if (request('per_page') && request('per_page') == 100) selected @endif>100</option>
                                 </select>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body">
                     <div id="tableFile">
-                        @include('categories.table')
+                        @include('orders.table')
                     </div>
                 </div>
             </div>
@@ -151,4 +141,5 @@
     <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
     <!-- Internal Modal js-->
     <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
+
 @endsection

@@ -23,6 +23,18 @@ class Book extends Model
         $query->where('is_active', 1);
     }
 
+
+    public function scopeSearch($query, $search)
+    {
+        $query->where('name', 'like', "%{$search}%")
+            ->orWhere('price', 'like', "%{$search}%")
+            ->orWhere('offer', 'like', "%{$search}%")
+            ->orWhere('description', 'like', "%{$search}%")
+            ->orWhereHas('category', function($category) use($search) {
+                $category->where('name', 'like', "%{$search}%");
+            });
+    }
+
     public function finalPrice()
     {
         return $this->offer ?? $this->price;

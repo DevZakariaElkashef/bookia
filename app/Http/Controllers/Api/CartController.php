@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CartItemResource;
 use App\Models\Coupon;
 use App\Traits\BaseApi;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CartItemResource;
 use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
@@ -36,8 +36,18 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $item = $this->getItem($request);
-        $cart = $this->getCart($request->user());
+        $validator = Validator::make($request->all(), [
+            'book_id' => 'required|exists:books,id',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendResponse('', $validator->errors()->first(), 403);
+        }
+
+        $user = $request->user();
+        $cart = $this->getCart($user);
+
+        $item = $cart->cartitems->where('book_id', $request->book_id)->first();
 
         if ($item) {
             $item->update(['qty' => $item->qty + 1]);
@@ -45,19 +55,28 @@ class CartController extends Controller
         } else {
             $cart->cartitems()->create([
                 'book_id' => $request->book_id,
-                'qty' => 1
+                'qty' => 1,
             ]);
             $message = 'Book Added to cart success';
         }
 
-
         return $this->sendResponse('', $message);
     }
 
-
     public function decrease(Request $request)
     {
-        $item = $this->getItem($request);
+        $validator = Validator::make($request->all(), [
+            'book_id' => 'required|exists:books,id',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendResponse('', $validator->errors()->first(), 403);
+        }
+
+        $user = $request->user();
+        $cart = $this->getCart($user);
+
+        $item = $cart->cartitems->where('book_id', $request->book_id)->first();
 
         if ($item && $item->qty > 1) {
             $item->update(['qty' => $item->qty - 1]);
@@ -67,10 +86,8 @@ class CartController extends Controller
             $message = 'Book Removed from cart success';
         }
 
-
         return $this->sendResponse('', $message);
     }
-
 
     public function delete(Request $request)
     {
@@ -85,10 +102,10 @@ class CartController extends Controller
     public function checkCoupon(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|exists:coupons,code'
+            'code' => 'required|exists:coupons,code',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendResponse('', $validator->errors()->first(), 403);
         }
 
@@ -105,10 +122,10 @@ class CartController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'lat' => 'required',
-            'lng' => 'required'
+            'lng' => 'required',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendResponse('', $validator->errors()->first(), 403);
         }
 
@@ -119,14 +136,13 @@ class CartController extends Controller
         return $this->sendResponse('', 'Shipping Added to cart sumary');
     }
 
-
     private function getItem($request)
     {
         $validator = Validator::make($request->all(), [
-            'book_id' => 'required|exists:books,id'
+            'book_id' => 'required|exists:books,id',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendResponse('', $validator->errors()->first(), 403);
         }
 
@@ -135,7 +151,6 @@ class CartController extends Controller
 
         return $cart->cartitems->where('book_id', $request->book_id)->first();
     }
-
 
     private function getCart($user)
     {

@@ -52,7 +52,7 @@
                     @method('delete')
                     <input type="hidden" name="ids" id="selectionIdsInput">
                     <div class="modal-body">
-                        <h6 class="text-center">{{ __('Are_you_sure') }}</h6>
+                        <h6 class="text-center">{{ __('Are you sure') }}</h6>
                     </div>
                     <div class="modal-footer">
                         <button class="btn ripple btn-danger" type="submit">{{ __('delete') }}</button>

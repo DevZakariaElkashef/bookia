@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +47,20 @@ Route::middleware('auth')->group(function () {
     Route::get('search-books', [BookController::class, 'search'])->name('books.search');
     Route::get('books-toggle-status/{book}', [BookController::class, 'toggleStatus'])->name('book.toggleStatus');
     Route::delete('delete-books', [BookController::class, 'delete'])->name('books.delete');
+    /**end Slider Routes */
+
+    /**start Slider Routes */
+    Route::resource('orders', controller: OrderController::class);
+    Route::get('search-orders', [OrderController::class, 'search'])->name('orders.search');
+    Route::get('orders-toggle-status/{product}', [OrderController::class, 'toggleStatus'])->name('orders.toggleStatus');
+    Route::get('orders-export', [OrderController::class, 'export'])->name('orders.export');
+    Route::post('orders-update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::post('orders-update-payment', [OrderController::class, 'updatePayment'])->name('orders.updatePayment');
+    Route::delete('delete-orders', [OrderController::class, 'delete'])->name('orders.delete');
+    /**end Slider Routes */
+
+    /**start Slider Routes */
+    Route::resource('orderitems', OrderItemController::class);
     /**end Slider Routes */
 
 });
