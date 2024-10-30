@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::get('search-categories', [CategoryController::class, 'search'])->name('categories.search');
     Route::get('categories-toggle-status/{category}', [CategoryController::class, 'toggleStatus'])->name('category.toggleStatus');
     Route::delete('delete-categories', [CategoryController::class, 'delete'])->name('categories.delete');
+    /**end Slider Routes */
+
+    /**start Slider Routes */
+    Route::resource('books', BookController::class);
+    Route::get('search-books', [BookController::class, 'search'])->name('books.search');
+    Route::get('books-toggle-status/{book}', [BookController::class, 'toggleStatus'])->name('book.toggleStatus');
+    Route::delete('delete-books', [BookController::class, 'delete'])->name('books.delete');
     /**end Slider Routes */
 
 });
