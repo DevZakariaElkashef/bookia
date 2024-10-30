@@ -63,4 +63,5 @@ Route::middleware('auth')->group(function () {
     /**end Slider Routes */
 
 });
+
 require __DIR__ . '/auth.php';
