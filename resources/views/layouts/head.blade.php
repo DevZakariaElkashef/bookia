@@ -19,3 +19,4 @@
 <link href="{{URL::asset('assets/css-rtl/skin-modes.css')}}" rel="stylesheet">
 
 @include('layouts.custom-style')
+

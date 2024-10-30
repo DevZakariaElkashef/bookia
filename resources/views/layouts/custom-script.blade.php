@@ -111,7 +111,7 @@
                             $('.success-toast').fadeOut(function() {
                                 $(this).addClass(
                                     'd-none'
-                                ); // Add d-none after fade out completes
+                                    ); // Add d-none after fade out completes
                             });
                         }, 1000);
                     }

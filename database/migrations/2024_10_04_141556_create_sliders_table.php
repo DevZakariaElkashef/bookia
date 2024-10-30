@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('image');
+            $table->boolean('is_active')->default(1);
             $table->foreignId('book_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });

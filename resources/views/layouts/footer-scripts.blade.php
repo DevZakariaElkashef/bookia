@@ -33,3 +33,5 @@
 <script src="{{URL::asset('assets/plugins/side-menu/sidemenu.js')}}"></script>
 
 @include('layouts.custom-script')
+
+
