@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price');
             $table->decimal('offer')->nullable();
             $table->text('description');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

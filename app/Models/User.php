@@ -43,6 +43,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function scopeActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+
 
     public function wishlists()
     {

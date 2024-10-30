@@ -11,4 +11,10 @@ class Slider extends Model
     use HasFactory, FilterScope;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
+
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', 1);
+    }
 }

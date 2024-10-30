@@ -16,7 +16,7 @@
                 <tr>
                     <th class="text-end p-1"><input type="checkbox" class="checkbox-input" value="{{ $slider->id }}"></th>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $slider->name }}</td>
+                    <td>{{ $slider->title }}</td>
                     <td>
                         <a href="{{ asset($slider->image) }}" download>
                             <img src="{{ asset($slider->image) }}" style="display: inline-block; border-radius: 50%;"

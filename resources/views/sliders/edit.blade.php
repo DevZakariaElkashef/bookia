@@ -43,29 +43,26 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6 form-group mg-b-0">
-                                <label class="form-label">{{ __('name') }}(AR): <span
-                                        class="tx-danger">*</span></label>
-                                <input class="form-control" name="name_ar" placeholder="{{ __('enter_name') }}"
-                                    required="" type="text" value="{{ old('name_ar') ?? $slider->name_ar }}">
-                                @error('name_ar')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 form-group mg-b-0">
-                                <label class="form-label">{{ __('name') }}(EN): <span
-                                        class="tx-danger">*</span></label>
-                                <input class="form-control" name="name_en" placeholder="{{ __('enter_name') }}"
-                                    required="" type="text" value="{{ old('name_en') ?? $slider->name_en }}">
-                                @error('name_en')
+                                <label class="form-label">{{ __('title') }}<span class="tx-danger">*</span></label>
+                                <input class="form-control" name="title" placeholder="{{ __('enter_name') }}"
+                                    required="" type="text" value="{{ old('title') ?? $slider->title }}">
+                                @error('title')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
+
                             <div class="col-md-6 form-group mg-b-0">
-                                <label class="form-label">{{ __('url') }}:</label>
-                                <input class="form-control" name="url" placeholder="{{ __('enter_name') }}"
-                                    type="url" value="{{ old('url') ?? $slider->url }}">
-                                @error('url')
+                                <label class="form-label">{{ __('book') }}: <span class="tx-danger">*</span></label>
+                                <select required class="form-control" name="book_id">
+                                    @foreach ($books as $book)
+                                        <option value="{{ $book->id }}"
+                                            @if (old('book_id', $slider->book_id) == $book->id) selected @endif>
+                                            {{ $book->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('book_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -83,7 +80,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-12 form-group mt-4">
+                            <div class="col-md-6 form-group mt-4">
                                 <div class="custom-file">
                                     <label class="custom-file-label" for="customFile">{{ __('image') }}</label>
                                     <input class="custom-file-input" id="customFile" type="file" name="image">
@@ -94,8 +91,7 @@
                             </div>
 
                             <div class="col-12 mg-t-10 mg-sm-t-25">
-                                <button class="btn btn-main-primary pd-x-20"
-                                    type="submit">{{ __('submit') }}</button>
+                                <button class="btn btn-main-primary pd-x-20" type="submit">{{ __('submit') }}</button>
                             </div>
                         </div>
                     </form>

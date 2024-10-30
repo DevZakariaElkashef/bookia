@@ -17,6 +17,11 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+
     public function finalPrice()
     {
         return $this->offer ?? $this->price;

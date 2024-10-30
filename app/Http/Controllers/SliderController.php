@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Http\Requests\sliderRequest;
@@ -35,7 +36,8 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view("sliders.create");
+        $books = Book::active()->get();
+        return view("sliders.create", compact('books'));
     }
 
     /**
@@ -60,7 +62,8 @@ class SliderController extends Controller
      */
     public function edit(slider $slider)
     {
-        return view('sliders.edit', compact('slider'));
+        $books = Book::active()->get();
+        return view('sliders.edit', compact('slider', 'books'));
     }
 
     /**

@@ -11,6 +11,12 @@ class Category extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+
+    public function scopeActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+
     public function books()
     {
         return $this->hasMany(Book::class);

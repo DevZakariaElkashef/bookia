@@ -19,9 +19,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        $sliders = SliderResource::collection(Slider::all());
-        $categories = CategoryResource::collection(Category::all());
-        $books = BookResource::collection(Book::all());
+        $sliders = SliderResource::collection(Slider::active()->get());
+        $categories = CategoryResource::collection(Category::active()->get());
+        $books = BookResource::collection(Book::active()->get());
 
 
         $data = [
@@ -37,12 +37,14 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $books = Book::whereHas('category', function ($category) use ($request) {
-            $category->where('name', 'like', "%$request->input%");
-        })->orWhere('name', 'like', "%$request->input%")
-            ->orWhere('price', 'like', "%$request->input%")
-            ->orWhere('offer', 'like', "%$request->input%")
-            ->orWhere('offer', 'like', "%$request->input%")->get();
+        $books = Book::active()->where(function($query) use ($request){
+            $query->whereHas('category', function ($category) use ($request) {
+                $category->where('name', 'like', "%$request->input%")->active();
+            })->orWhere('name', 'like', "%$request->input%")
+                ->orWhere('price', 'like', "%$request->input%")
+                ->orWhere('offer', 'like', "%$request->input%")
+                ->orWhere('offer', 'like', "%$request->input%");
+        })->get();
 
 
         $data = BookResource::collection($books);
