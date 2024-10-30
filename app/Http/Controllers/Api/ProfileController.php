@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ProfileResource;
 use App\Traits\BaseApi;
 use Illuminate\Http\Request;
+use App\Traits\ImageUploadTrait;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\ProfileResource;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    use BaseApi;
+    use BaseApi, ImageUploadTrait;
 
     public function index(Request $request)
     {
@@ -42,12 +43,8 @@ class ProfileController extends Controller
         $user->update($request->except('image'));
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = public_path('images/users');
-            $file->move($path, $filename);
-
-            $user->update(['image' => $filename]);
+            $path = $this->uploadImage($request->file('image'), 'users', $user->image);
+            $user->update(['image' => $path]);
         }
 
         return $this->sendResponse('', 'Profile Updated successfully!');

@@ -48,9 +48,8 @@
             <div class="mb-3 mb-xl-0 ml-3">
                 <div class="btn-group dropdown">
                     <button type="button" class="btn btn-danger" id="deleteOrderBtn"
-                        data-url="{{ route('orders.destroy', $order->id) }}" data-toggle="modal"
-                        data-target="#deleteModal" data-placement="top" data-toggle="tooltip"
-                        title="{{ __('delete') }} ">
+                        data-url="{{ route('orders.destroy', $order->id) }}" data-toggle="modal" data-target="#deleteModal"
+                        data-placement="top" data-toggle="tooltip" title="{{ __('delete') }} ">
                         {{ __('delete') }} </button>
                 </div>
             </div>
@@ -115,8 +114,7 @@
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label">{{ __('book') }}: <span
-                                            class="tx-danger">*</span></label>
+                                    <label class="form-label">{{ __('book') }}: <span class="tx-danger">*</span></label>
                                     <div class="parsley-select " id="slWrapperis_active">
                                         <select class="form-control selectwithoutsearch"
                                             data-parsley-class-handler="#slWrapperis_active"
@@ -177,7 +175,7 @@
                 <div class="modal-content ">
                     <div class="modal-header">
                         <h4 class="modal-title"> {{ __('Order number') }} {{ $order->id }}</h4>
-                        <h5>{{ __('Change_Order_Status') }}</h5>
+                        <h5>{{ __('Change Order Status') }}</h5>
                     </div>
                     <div class="modal-body">
 
@@ -214,10 +212,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -239,22 +233,14 @@
                     <div class="pl-0">
                         <div class="main-profile-overview">
                             <div class="main-img-user profile-user">
-                                <img alt="" src="{{ asset($order->user->image) }}">
+                                <img alt=""
+                                    src="{{ $order->user->image ? asset($order->user->image) : URL::asset('assets/img/faces/6.jpg') }}">
                             </div>
                             <div class="d-flex justify-content-between mg-b-5">
                                 <div>
                                     <h5 class="main-profile-name">{{ $order->user->name }}</h5>
-                                    <p class="main-profile-name-text" style="font-size: 15px;"> <a
-                                            href="javascript:void(0);" class="contact-icon border tx-inverse"
-                                            data-bs-toggle="tooltip" title="" data-bs-original-title="Call"
-                                            aria-label="Call"><i class="fe fe-phone" style="color:green"></i></a>
-                                        {{ $order->user->phone }} </p>
                                 </div>
                             </div><br />
-                            <h6>{{ __('Note') }}</h6>
-                            <div class="main-profile-bio">
-                                {{ $order->note }}
-                            </div><!-- main-profile-bio -->
 
                             <hr class="mg-y-10">
                             <div class="table-responsive mg-t-20">
@@ -269,22 +255,15 @@
                                             <td colspan="2">{{ $order->sub_total }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{ __('Coupon Discount Value') }} ({{ $order->discount }}%)</td>
-                                            <td colspan="2">
-                                                @if ($order->discount > 0)
-                                                    @php
-                                                        // Assuming $order->total_price is the price before discount
-                                                        $valuecoupon = ($order->discount / 100) * $order->total_price;
-                                                    @endphp
-                                                    {{ number_format($valuecoupon, 2) }}
-                                                @else
-                                                    0
-                                                @endif
+                                            <td>{{ __('Coupon Discount Value') }}</td>
+                                            <td colspan="2" class="{{ $order->discount ? 'text-danger' : '' }}">
+                                                {{ $order->discount }}
+                                                {{ $order->discount ? '-' : '' }}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>{{ __('Delivery value') }}</td>
-                                            <td colspan="2">{{ floatval($order->delivery) }}
+                                            <td colspan="2">{{ floatval($order->shipping) }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -333,13 +312,13 @@
                                     <i class="icon-rocket text-success"></i>
                                 </div>
                                 <div class="mr-auto">
-                                    <h2 class="tx-14 mt-2" style="font-weight:bold">{{ __('Order_Status') }}
+                                    <h2 class="tx-14 mt-2" style="font-weight:bold">{{ __('Order Status') }}
                                     </h2>
                                     <h5 class="mb-0 tx-15 mt-1">
                                         {{ match ($order->status) {
-                                            0 => "pending",
-                                            1 => "complete",
-                                            2 => "return",
+                                            0 => 'pending',
+                                            1 => 'complete',
+                                            2 => 'return',
                                         } }}
                                     </h5>
                                 </div>
@@ -470,14 +449,14 @@
                         <div class="tab-pane" id="settings">
                             <div style="text-align: center" class="tx-16"><button type="button"
                                     class="btn btn-primary mx-2 button-icon mb-1 tx-14">
-                                    {{ $order->payment_type ? 'Online' : "Cash" }}
+                                    {{ $order->payment_type ? 'Online' : 'Cash' }}
                                 </button>
                             </div>
                         </div>
                         <div class="tab-pane" id="reviews">
                             <div style="text-align: center" class="tx-16">
-                                    <h5> {{ __('stars') }} : {{ $order->orderReview->stars ?? 0}}</h5>
-                                    <h5> {{ __('comment') }} : {{ $order->orderReview->comment ?? ''}}</h5>
+                                <h5> {{ __('stars') }} : {{ $order->orderReview->stars ?? 0 }}</h5>
+                                <h5> {{ __('comment') }} : {{ $order->orderReview->comment ?? '' }}</h5>
 
                             </div>
                         </div>
