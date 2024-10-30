@@ -17,14 +17,14 @@ class SliderRepository
 
     public function index($request)
     {
-        $sliders = Slider::filter($request)->mall()->paginate($request->per_page ?? $this->limit);
+        $sliders = Slider::filter($request)->paginate($request->per_page ?? $this->limit);
 
         return $sliders;
     }
 
     public function search($request)
     {
-        return Slider::mall()->search($request->search)->paginate($request->per_page ?? $this->limit);
+        return Slider::search($request->search)->paginate($request->per_page ?? $this->limit);
     }
 
     public function store($request)

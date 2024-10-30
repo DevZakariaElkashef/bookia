@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Slider;
+use App\Http\Requests\sliderRequest;
 use App\Repositories\SliderRepository;
 
 class SliderController extends Controller
@@ -19,40 +21,13 @@ class SliderController extends Controller
     public function index(Request $request)
     {
         $sliders = $this->sliderRepository->index($request);
-        return view('mall.sliders.index', compact('sliders'));
+        return view('sliders.index', compact('sliders'));
     }
 
     public function search(Request $request)
     {
         $sliders = $this->sliderRepository->search($request);
-        return view('mall.sliders.table', compact('sliders'))->render();
-    }
-
-    public function export(Request $request)
-    {
-        return Excel::download(new sliderExport($request), 'sliders.xlsx');
-    }
-
-
-    public function import(Request $request)
-    {
-        try {
-            Excel::import(new sliderImport, $request->file('file'));
-
-            return back()->with('success', __("main.created_successfully"));
-        } catch (ValidationException $e) {
-            // Get the first failure from the exception
-            $failure = $e->failures()[0];
-
-            // Format the error message for the first failed row
-            $errorMessage = "Row {$failure->row()}: " . implode(', ', $failure->errors());
-
-            // Flash the error message to the session
-            return back()->with('error', $errorMessage);
-        } catch (\Exception $e) {
-            // Handle any other exceptions that might occur
-            return back()->with('error', __("An unexpected error occurred: " . $e->getMessage()));
-        }
+        return view('sliders.table', compact('sliders'))->render();
     }
 
     /**
@@ -60,7 +35,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view("mall.sliders.create");
+        return view("sliders.create");
     }
 
     /**
@@ -69,7 +44,7 @@ class SliderController extends Controller
     public function store(sliderRequest $request)
     {
         $this->sliderRepository->store($request); // store slider
-        return to_route('mall.sliders.index')->with('success', __("main.created_successffully"));
+        return to_route('sliders.index')->with('success', __("created_successffully"));
     }
 
     /**
@@ -77,7 +52,7 @@ class SliderController extends Controller
      */
     public function show(string $id)
     {
-        return to_route('mall.sliders.edit');
+        return to_route('sliders.edit');
     }
 
     /**
@@ -85,7 +60,7 @@ class SliderController extends Controller
      */
     public function edit(slider $slider)
     {
-        return view('mall.sliders.edit', compact('slider'));
+        return view('sliders.edit', compact('slider'));
     }
 
     /**
@@ -94,7 +69,7 @@ class SliderController extends Controller
     public function update(sliderRequest $request, slider $slider)
     {
         $this->sliderRepository->update($request, $slider);
-        return to_route('mall.sliders.index')->with('success', __("main.updated_successffully"));
+        return to_route('sliders.index')->with('success', __("updated_successffully"));
     }
 
     public function toggleStatus(Request $request, slider $slider)
@@ -102,7 +77,7 @@ class SliderController extends Controller
         $slider->update(['is_active' => $request->is_active]);
         return response()->json([
             'success' => true,
-            'message' => __("main.updated_successffully")
+            'message' => __("updated_successffully")
         ]);
     }
 
@@ -112,12 +87,12 @@ class SliderController extends Controller
     public function destroy(slider $slider)
     {
         $this->sliderRepository->delete($slider);
-        return to_route('mall.sliders.index')->with('success', __("main.delete_successffully"));
+        return to_route('sliders.index')->with('success', __("delete_successffully"));
     }
 
     public function delete(Request $request)
     {
         $this->sliderRepository->deleteSelection($request);
-        return to_route('mall.sliders.index')->with('success', __("main.delete_successffully"));
+        return to_route('sliders.index')->with('success', __("delete_successffully"));
     }
 }
