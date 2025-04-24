@@ -27,6 +27,7 @@ class BookResource extends JsonResource
             'category_name' => $this->category ? $this->category->name : '',
             'image' => asset($this->image),
             'name' => $this->name,
+            'description' => $this->description ?? '',
             'price' => $this->price,
             'offer' => $this->offer,
             'is_in_my_wishlist' => $isInMyWishList

@@ -20,6 +20,7 @@ class CartItemResource extends JsonResource
             'price' => (string) $this->book->price,
             'offer' => (string) $this->book->offer,
             'name' => $this->book->name ?? '',
+            'description' => $this->book->description ?? '',
             'qty' => $this->qty
         ];
     }
